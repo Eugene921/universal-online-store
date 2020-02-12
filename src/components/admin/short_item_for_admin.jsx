@@ -6,12 +6,12 @@ import {
 
 import { storeItem } from '../../prop_type';
 
-export default function StoreItemShort({ item }) {
+export default function ItemShortForAdmin({ item }) {
   const { url } = useRouteMatch();
 
   return (
     <Link to={`${url}/${item.link}`}  style={{ textDecoration: 'none' }}>
-      <div className="store_item_short">
+      <div className="admin_item_short">
         <img src={item.images[0].src} alt="" />
         <h3>{item.name}</h3>
         <span>{item.costPerItem}</span>
@@ -20,6 +20,6 @@ export default function StoreItemShort({ item }) {
   );
 }
 
-StoreItemShort.propTypes = {
+ItemShortForAdmin.propTypes = {
   item: storeItem,
 };

@@ -1,0 +1,164 @@
+.store {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.store_item_short {
+  position: relative;
+  width: 300px;
+  color: white;
+  background-color: grey;
+  margin: 5px;
+
+  img {
+    width: 100%;
+  }
+  h3 {
+    margin-left: 10px;
+    line-height: 50px;
+    display: inline-block;
+  }
+  span {
+    float: right;
+    margin-right: 10px;
+    line-height: 50px;
+  }
+}
+
+.store_item_full {
+  display: flex;
+  flex-direction: row;
+
+  .btn_back_to_store {
+    text-align: end;
+  }
+
+  .product_name {
+    font-size: 35px;
+    line-height: 60px;
+    text-transform: capitalize;
+    margin: 10px 0px 30px;
+  }
+
+  .product_details {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 50px;
+    white-space: pre-line;
+  }
+
+  .product_size,
+  .product_color {
+    margin-bottom: 20px;
+    span {
+      line-height: 26px;
+    }
+  }
+
+  .product_quantity_wrapper {
+    margin-bottom: 50px;
+    > span {
+      line-height: 40px;
+    }
+  }
+
+  > div:first-child {
+    width: 60%;
+    background-color: #f1f1f1;
+  }
+  > div:last-child {
+    padding: 20px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+  }
+  .store_item_sizes_bar,
+  .store_item_colors_bar {
+    display: flex;
+    flex-direction: row;
+
+    li {
+      cursor: pointer;
+      margin: 2px;
+      min-width: 20px;
+      min-height: 20px;
+      line-height: 20px;
+      text-align: center;
+      border: 2px solid transparent;
+      padding: 3px;
+
+      span {
+        display: block;
+        height: 100%;
+      }
+    }
+  }
+
+  .product_quantity {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left: 5px;
+    height: 41px;
+    width: 80px;
+
+    span {
+      text-align: center;
+      font-size: 17px;
+      border: 2px solid rgb(58, 58, 58);
+      width: 29px;
+    }
+
+    span:first-child {
+      height: 38px;
+      font-size: 20px;
+      line-height: 36px;
+      margin-right: -2px;
+      width: 50px;
+      background-color: black;
+    }
+
+    span:nth-child(2) {
+      cursor: pointer;
+      background-color: rgb(58, 58, 58);
+      &:hover {
+        background-color: black;
+      }
+    }
+
+    span:last-child {
+      cursor: pointer;
+      background-color: rgb(58, 58, 58);
+      font-size: 18px;
+      margin-top: -2px;
+
+      &:hover {
+        background-color: black;
+      }
+    }
+  }
+
+  .store_item_add_to_card {
+    background-color: rgb(58, 58, 58);
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 14px;
+    padding: 8px 35px;
+    width: 150px;
+    &:hover {
+      background-color: black;
+    }
+  }
+
+  h2 {
+    line-height: 50px;
+    font-size: 25px;
+  }
+
+  img {
+    width: 100%;
+  }
+}

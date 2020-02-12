@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/storage';
 
 const firebaseApp = firebase.initializeApp({
   apiKey: process.env.FIREBASE_KEY,
@@ -11,5 +12,7 @@ const firebaseApp = firebase.initializeApp({
   appId: process.env.FRIBASE_APP_ID,
   measurementId: process.env.FRIBASE_MEASUREMENT_ID,
 });
+
+export const storageRef = firebase.storage().ref();
 
 export default firebaseApp;

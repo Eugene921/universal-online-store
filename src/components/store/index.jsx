@@ -1,17 +1,15 @@
 import React from 'react';
-import {
-  Route,
-  Switch
-} from 'react-router-dom';
 
-import Store from './store';
-import StoreItemFull from './full_item/store_item_full';
+import initState from '../../initial_state';
 
-export default function AppStore() {
+import StoreItemShort from './store_item_short';
+
+export default function Store() {
   return (
-    <Switch>
-      <Route exact path='/store' component={Store}/>
-      <Route path='/store/:product' component={StoreItemFull}/>
-    </Switch>
+    <div className="store"> 
+      {
+        initState.store.map(item => <StoreItemShort item={item} key={item.link} />)
+      }
+    </div>
   );
 }

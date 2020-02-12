@@ -1,41 +1,70 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';import Zoom from 'react-img-zoom';
 
-function SliderForProduct ({ arrImages, classNameValue, slidePosition, goToPre, goToNext }) {
-  const activeGoToPre = e => {
-    e.preventDefault();
-    goToPre();
-  };
-  const activeGoToNext = e => {
-    e.preventDefault();
-    goToNext();
-  };
-  const elemArrImages = arrImages.map((item, i) => {
+class SliderForProduct extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      slidePosition: 0,
+    };
 
-    const key = Math.floor(Math.random() * 100) + item;
+    this.goTo = this.goTo.bind(this);
+  }
 
-    return <img
-      key={key}
-      src={item} 
-      style={{ opacity: i === slidePosition ? '1' : '0', display: i === slidePosition ? 'block' : 'none',}}
-    />;
-  });
+  goTo(position) {
+    event.preventDefault();
+    const { images } = this.props;
 
-  return (
-    <div className={classNameValue}>
-      <button onClick={activeGoToPre}>❮</button>
-      {elemArrImages}
-      <button onClick={activeGoToNext}>❯</button>
-    </div>
-  );
-  // return <input {...rest} type="file" onChange={onChange} />;
+    this.setState({
+      slidePosition: position > 0 ? 
+                            position < images.length ? position : 0
+                            : images.length - 1
+    });
+  }
+
+  getElemImages() {
+    const { images, height, width } = this.props;
+    const { slidePosition } = this.state;
+
+    return images.map((item, i) => {
+      if(i ===  slidePosition) {
+        return (
+          <Zoom
+            key={item.src}
+            img={item.src} 
+            zoomScale={2}
+            width={width}
+            height={height}
+            style={{ opacity: i === slidePosition ? '1' : '0', display: i === slidePosition ? 'block' : 'none',}}
+          />
+        );
+      }
+    });
+  }
+
+  render() { 
+    const { className } = this.props;
+    const { slidePosition } = this.state;
+
+    const elemImages = this.getElemImages();
+
+    return (
+      <div className={className}>
+        {elemImages}
+        <button onClick={() => this.goTo(slidePosition - 1)}>❮</button>
+        <button onClick={() => this.goTo(slidePosition + 1)}>❯</button>
+      </div>
+    );
+  }
 }
+
 SliderForProduct.propTypes = {
-  arrImages: PropTypes.arrayOf(PropTypes.string),
-  classNameValue: PropTypes.string,
-  slidePosition: PropTypes.number,
-  goToPre: PropTypes.func,
-  goToNext: PropTypes.func,
+  images: PropTypes.arrayOf(PropTypes.shape({
+    src: PropTypes.string,
+  })),
+  className: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number,
 };
 
 export default SliderForProduct;

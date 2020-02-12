@@ -1,26 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import CastomInput from './castom_input';
 import CastomTextArea from './castom_textarea';
 import SelectToArr from './select_to_arr';
-import ArrFileInput from './arr_file_input';
-import SliderForProduct from '../slider/slider_for_product';
+import ImagesInput from './images_input';
+import SliderForProduct from '../../slider/slider_for_product';
 
+import PropTypes from 'prop-types';
 
-class ItemForAdmin extends React.Component {
+import initState from '../../../initial_state';
+
+import { storageRef } from '../../../base/base_auth';
+
+class SotoreItemForAdmin extends React.Component {
   constructor(props) {
-    super(props); 
+    super(props);
+    const storeItemLink = props.match.params.product;
+    const storeItem = initState.store.find(product => product.link === storeItemLink);
 
     this.state = {
-      name: props.item.name || '',
-      images: props.item.images || [],
-      details: props.item.details || '',
-      sizes: props.item.sizes || [],
-      colors: props.item.colors || [],
-      costPerItem: props.item.costPerItem || 0,
-      link: props.item.link|| '',
-      imageSlidePosition: 1,
+      name: storeItem.name,
+      images: storeItem.images,
+      details: storeItem.details,
+      sizes: storeItem.sizes,
+      colors: storeItem.colors,
+      costPerItem: storeItem.costPerItem,
+      link: storeItem.link,
     };
 
     this.onAddSize = this.onAddSize.bind(this);
@@ -30,16 +35,6 @@ class ItemForAdmin extends React.Component {
     this.onAddImages = this.onAddImages.bind(this);
     this.checkValueImages = this.checkValueImages.bind(this);
     this.fileSelectedHendler = this.fileSelectedHendler.bind(this);
-  }
-
-  goTo(position) {
-    const { images } = this.state;
-
-    this.setState({
-      imageSlidePosition: position > 0 ? 
-                            position < images.length ? position : 0
-                            : images.length - 1
-    });
   }
 
   onAddSize(event) {
@@ -99,18 +94,17 @@ class ItemForAdmin extends React.Component {
     const { images } = this.state;
 
     this.setState({
-      images: [...images, ''],
+      images: [...images, { src: ''}],
     });
   }
 
-  checkValueImages(index) {
+  checkValueImages(index, newImage) {
     const { images } = this.state;
-    const { value } = event.target;
 
-    if(value.length) {
+    if(newImage.src.length) {
 
       this.setState({
-        images: images.map((image, i) => i === index ? value : image),
+        images: images.map((image, i) => i === index ? newImage : image),
       });
     } else {  
        
@@ -120,30 +114,43 @@ class ItemForAdmin extends React.Component {
     }
   }
 
-  fileSelectedHendler(e) {
-    console.log(e.target.files[0]);
+  // async 
+  async fileSelectedHendler(e, index) {
+    if(e.target.files[0] === undefined) return;
+
+    const { images, link } = this.state;
+    const blob = new Blob([e.target.files[0]],  { type: e.target.files[0].type });
+
+    const imagesRef = storageRef.child(`images/${link}/${e.target.files[0].name}`);
+    // console.log(`images/${link}/${e.target.files[0].name}`);
+    
+    await imagesRef.put(blob),
+        console.log('Uploaded a blob or file!');
+
+    this.setState({
+      images: images.map((image, i) => i === index ? { src: URL.createObjectURL(blob) } : image),
+    });
   }
 
   render(){
-    const { link, name, details, costPerItem, sizes, colors, images, imageSlidePosition } = this.state;
+    const { link, name, details, costPerItem, sizes, colors, images } = this.state;
     
     return (
       <div>
         <form className="item_full_for_admin">
           <div className="item_full_images_for_admin">
-            <ArrFileInput
+            <ImagesInput
               name='Images'
-              arr={images}
+              images={images}
               onAddItem={this.onAddImages}
               checkValue={this.checkValueImages}
               fileSelectedHendler={this.fileSelectedHendler}
             />
             <SliderForProduct
-              slidePosition={imageSlidePosition}
-              goToPre={() => this.goTo(imageSlidePosition - 1)}
-              goToNext={() => this.goTo(imageSlidePosition + 1)}
-              arrImages={images}
-              classNameValue="slider_for_admin"
+              images={images}
+              className="slider_for_admin"
+              width={window.innerWidth / 100 * 40 > 600 ? 400 : window.innerWidth / 100 * 40}
+              height={window.innerHeight / 100 * 70}
             />
           </div>
           <div className="item_full_data_for_admin">
@@ -160,17 +167,8 @@ class ItemForAdmin extends React.Component {
   }
 }
 
-ItemForAdmin.propTypes = {
-  item: PropTypes.shape({
-    name: PropTypes.string,
-    images: PropTypes.arrayOf(PropTypes.string),
-    details: PropTypes.string,
-    sizes: PropTypes.arrayOf(PropTypes.string),
-    colors: PropTypes.arrayOf(PropTypes.string),
-    costPerItem: PropTypes.number,
-    link: PropTypes.string,
-    fontSize: PropTypes.number
-  }),
+SotoreItemForAdmin.propTypes = {
+  match: PropTypes.any,
 };
 
-export default ItemForAdmin;
+export default SotoreItemForAdmin;

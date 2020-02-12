@@ -1,0 +1,183 @@
+.admin {
+  display: flex;
+  flex-direction: row;
+
+  > div {
+    flex: 1 1 auto;
+  }
+
+  .admin_tools {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    top: 0px;
+    position: sticky;
+    color: white;
+    height: 100vh;
+    min-width: 300px;
+    background-color: rgb(36, 36, 36);
+    box-shadow: -5px 0 10px -5px #333;
+
+    button {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 12px;
+      cursor: pointer;
+
+      &:hover{
+        background-color: rgb(36, 36, 36);
+        color: wheat;
+      }
+    }
+
+    h2 {
+      font-size: 18px;
+      line-height: 64px;
+      margin-left: 15px;
+    }
+
+    .nav_bar_for_admin {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      font-size: 14px;
+      line-height: 25px;
+
+      li{
+        flex: 1 1 auto;
+        text-align: center;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+      }
+
+      .active {
+        background-color: #4e4e4e;
+      }
+    }
+
+    .tools_bar {
+      flex: 1 1 auto;
+      background-color: #4e4e4e;
+    }
+  }
+
+  .admin_search {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+
+      a {
+        position: relative;
+        width: 300px;
+        color: white;
+        height: min-content;
+        background-color: grey;
+        margin: 5px;
+        display: block;
+      }
+    }
+
+    img {
+      width: 100%;
+    }
+    h3 {
+      margin-left: 10px;
+      line-height: 50px;
+      display: inline-block;
+    }
+    span {
+      float: right;
+      margin-right: 10px;
+      line-height: 50px;
+    }
+  }
+
+  .item_full_for_admin {
+    display: flex;
+    flex-direction: row;
+
+    > div {
+      border-bottom: 1px solid white;
+    }
+
+    .item_full_images_for_admin {
+      max-width: 600px;
+      background-color: #f1f1f1;
+      border-top: 1px solid rgb(128, 128, 128);
+      color: rgb(78, 78, 78);
+
+      li {
+        margin: 10px 5px;
+
+        input:first-child {
+          outline: none;
+        }
+
+        input:last-child {
+          border: 1px solid rgba(128, 128, 128, 0.5);
+        }
+      }
+
+      input {
+        width: 90%;
+        background-color: transparent;
+        padding: 3px;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .item_full_data_for_admin {
+      flex: 0 0 auto;
+      color: rgb(128, 128, 128);
+      font-size: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 10px;
+
+      label {
+        margin: 10px 0px;
+        display: flex;
+        flex-direction: column;
+        width: min-content;
+      }
+
+      input,
+      textarea {
+        color: white;
+        font-size: 13px;
+        background-color: transparent;
+        border: 0px;
+        border: 1px solid rgb(90, 90, 90);
+        padding: 2px;
+      }
+
+      ul {
+        margin: 15px 0px;
+
+        button {
+          margin-top: 10px;
+        }
+      }
+
+      .show_select_colors_admin {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin: 5px 5px -5px 0px;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.slider_for_user,
+.slider_for_admin {
+  position: relative;
+  > div {
+    height: 100%;
+    margin: auto;
+  }
+  button {
+    outline: none;
+    position: absolute;
+    bottom: 0px;
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    top: calc(50% - 25px);
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    transition: 0.3s;
+    &:hover {
+      font-size: 30px;
+    }
+  }
+  button:first-child {
+    left: 0px;
+  }
+  button:last-child {
+    right: 0px;
+  }
+}
