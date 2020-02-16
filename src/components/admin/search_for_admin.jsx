@@ -1,41 +1,44 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-// import initState from '../../initial_state';
+import { getShortListProduct } from '../../actions/';
 
 import ItemShortForAdmin from './short_item_for_admin';
-
-import { getShortItemsProduct } from '../../base/base_product';
 
 class SearchForAdmin extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      listProduct: [],
-    };
-    this.getListProducrt();
-  }
-
-  async getListProducrt() {
-    const listProduct = await getShortItemsProduct();
-
-    this.setState({ listProduct: listProduct });
+    this.props.getShortListProduct();
   }
 
   render() {
-    const { listProduct } = this.state;
-    console.log(listProduct);
-
+    const { listProducts, loading } = this.props;
+    
     return (
-      <div className="admin_search">
+      <div className={`admin_search ${loading ? 'loading' : ''}`}>
         <div>
           <ItemShortForAdmin item={{ name: '', link: 'create-new-product' }} />
-          { listProduct.map(item => <ItemShortForAdmin item={item} key={item.link} />) }
+          { listProducts.map(item => <ItemShortForAdmin item={item} key={item.link} />) }
         </div>
       </div>
     );
   }
 }
 
-// { listProduct.map(item => <ItemShortForAdmin item={item} key={item.link} />) }
-export default SearchForAdmin;
+SearchForAdmin.propTypes = {
+  getShortListProduct: PropTypes.func,
+  listProducts: PropTypes.arrayOf(PropTypes.object),
+  loading: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  listProducts: state.searchProductList.listProducts,
+  loading: state.searchProductList.loading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getShortListProduct: () => dispatch(getShortListProduct())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchForAdmin);

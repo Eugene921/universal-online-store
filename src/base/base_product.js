@@ -12,7 +12,6 @@ const deleteProductImage = async image => {
 };
 
 const onSaveImages = async (images, link) => {
-  console.log(images);
   return await Promise.all(images.map(async (image) => {
     try {
       if (image.delete) return await deleteProductImage(image);
@@ -39,9 +38,7 @@ const onSaveImages = async (images, link) => {
 export const setItemProduct = async (product) => {
   try {
     const saveImages = await onSaveImages(product.images, product.link );
-      console.log(saveImages);
       
-
     await database.ref(`/test/${product.link}`).set({ ...product, images: saveImages });
   } catch (error) {
     console.error(error);
@@ -98,6 +95,5 @@ export const getShortItemsProduct = async () => {
   } catch (error) {
     alert(error);
   }
-  console.log(itemsProduct);
   return itemsProduct;
 };
