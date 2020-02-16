@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import productItem from './product_item';
+import itemProduct from './item_product';
 import searchProductList from './search_product_list';
 
 export default combineReducers({
-  productItem,
+  itemProduct,
   searchProductList,
 });

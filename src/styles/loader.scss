@@ -10,8 +10,9 @@
   }
   
   &::after{
-    left: calc(50% - 50px);
-    top: calc(50% - 50px);
+    position: sticky;
+    bottom: calc(50vh - 50px);
+    margin: auto;
 
     border: 1px solid #ffffff6e;
     border-top: 1px solid #006eff;

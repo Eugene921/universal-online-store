@@ -16,7 +16,7 @@ export default function ItemShortForAdmin({ item }) {
       <div className="admin_item_short">
         { item.images ? 
                       <img src={item.images[0].url} alt={item.images[0].name} />
-                      : <div className="admin_item_short_create">+</div> }
+                      : <div className="admin_item_short_create"/> }
         <div className="admin_item_short_description">
           <h3>{item.name}</h3>
           <span>{item.costPerItem || ''}</span>

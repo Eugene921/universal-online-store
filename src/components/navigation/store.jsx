@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Navigation() {
+export default function StoreNavigation() {
   return (
     <nav className="navigation">
       <ul>

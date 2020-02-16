@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { getItemProducti } from '../../../actions';
 
 import CastomInput from './castom_input';
 import CastomTextArea from './castom_textarea';
@@ -27,6 +30,7 @@ class SotoreItemForAdmin extends React.Component {
   constructor(props) {
     super(props);
     const linkPath = props.match.params.product;
+    console.log(this.props.getItemProducti());
 
     this.state = {
       name: '',
@@ -254,6 +258,17 @@ class SotoreItemForAdmin extends React.Component {
 
 SotoreItemForAdmin.propTypes = {
   match: PropTypes.any,
+  getItemProducti: PropTypes.func,
 };
 
-export default SotoreItemForAdmin;
+
+const mapStateToProps = (state) => ({
+  loading: state.itemProduct.loading,
+  itemProduct: state.itemProduct.itemProduct,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getItemProducti: () => dispatch(getItemProducti())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SotoreItemForAdmin);
