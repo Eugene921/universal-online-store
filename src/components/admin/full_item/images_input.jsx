@@ -1,40 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ImagesInput ({ images, name, onAddItem, checkValue, fileSelectedHendler }) {
-  const onCheckValue = (index) => {
-    const newImageSrc = event.target.value;
-
-    checkValue(index, { src: newImageSrc });
+function ImagesInput ({ images, onRemoveItem, changeName, fileSelectedHendler, slidePosition }) {
+  const onCheckName = (index) => {
+    changeName(index, event.target.value);
   };
 
+  const activOnRemoveItem = (index) => {
+    event.preventDefault();
+    
+    onRemoveItem(index);
+  };
   const elemArr = images.map((item, i) => {
-    // const key = Math.floor(Math.random() * 100) + item.src;
-
     return (
-      <li key={item.src}>
-        { !item.src ? <input accept="image/*" type="file" onChange={e => fileSelectedHendler(e, i)}/> : null }
-        <input type="text" onBlur={() => onCheckValue(i)} defaultValue={item.src} />
+      <li key={item.url} className={i === slidePosition ? 'active' : ''}>
+      
+        
+        <input
+          type="text"
+          title="Name of image"
+          placeholder="Name of image"
+          disabled={!!item.path}
+          onChange={() => onCheckName(i)}
+          value={item.name || ''}
+        />
+        <button className="btn_delte_image" onClick={() => activOnRemoveItem(i)}>Delete</button>
       </li>
     );
   });
 
   return (
     <ul>
-      <li>{ name }:</li>
+      <li>Images:</li>
       {elemArr} 
-      <li><button onClick={onAddItem}>Add</button></li>
+      <li><input accept="image/*" type="file" onChange={e => fileSelectedHendler(e)}/></li>
   </ul>
   );
 }
 
 ImagesInput.propTypes = {
   images: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string,
+    url: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    path: PropTypes.string,
   })),
   name: PropTypes.string,
-  onAddItem: PropTypes.func,
-  checkValue: PropTypes.func,
+  slidePosition:  PropTypes.number,
+  onRemoveItem: PropTypes.func,
+  changeName: PropTypes.func,
   fileSelectedHendler: PropTypes.func,
 };
 

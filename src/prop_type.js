@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 export const storeItem = PropTypes.shape({
   name: PropTypes.string,
   images: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string,
+    url: PropTypes.string,
+    path: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    delete: PropTypes.string,
   }),
  ),
   details: PropTypes.string,

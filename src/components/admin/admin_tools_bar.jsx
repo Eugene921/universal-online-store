@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import firebaseApp from '../../base/base_auth';
+import firebaseApp from '../../base/base';
 import PropTypes from 'prop-types';
 
-export default function Admin(props) {
+export default function AdminToolBar(props) {
   const nawLink = props.match.isExact;
 
   return (
@@ -24,7 +24,7 @@ export default function Admin(props) {
   );
 }
 
-Admin.propTypes = {
+AdminToolBar.propTypes = {
   match: PropTypes.any,
 };
 

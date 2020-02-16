@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function CastomInput ({ name, value }) {
+function CastomInput ({ name, value, onChange }) {
   return (
       <label>
         {name}:
-        <input type="text" defaultValue={value} />
+        <input type="text" value={value} onChange={e => onChange(e.target.value)} />
       </label> 
   );
 }
@@ -16,6 +16,7 @@ CastomInput.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  onChange: PropTypes.func,
 };
 
 export default CastomInput;

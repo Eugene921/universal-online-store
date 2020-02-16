@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import firebaseApp from '../../base/base_auth';
+import firebaseApp from '../../base/base';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';import Zoom from 'react-img-zoom';
 class SliderForProduct extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       slidePosition: 0,
     };
@@ -16,9 +17,9 @@ class SliderForProduct extends React.Component {
     const { images } = this.props;
 
     this.setState({
-      slidePosition: position > 0 ? 
-                            position < images.length ? position : 0
-                            : images.length - 1
+      slidePosition: position >= 0 ? 
+                                    position < images.length ? position : 0
+                                    : images.length - 1
     });
   }
 
@@ -30,8 +31,9 @@ class SliderForProduct extends React.Component {
       if(i ===  slidePosition) {
         return (
           <Zoom
-            key={item.src}
-            img={item.src} 
+            key={item.url}
+            img={item.url} 
+            title={item.name}
             zoomScale={2}
             width={width}
             height={height}
@@ -42,26 +44,43 @@ class SliderForProduct extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.images.length !== this.props.images.length){
+      this.setState({ slidePosition: this.props.images.length - 1 });
+    }
+    if(prevState.slidePosition !== this.state.slidePosition){
+      this.props.getSlidePosition(this.state.slidePosition);
+    }
+  }
+
   render() { 
-    const { className } = this.props;
+    const { className, images } = this.props;
     const { slidePosition } = this.state;
 
     const elemImages = this.getElemImages();
 
-    return (
-      <div className={className}>
-        {elemImages}
-        <button onClick={() => this.goTo(slidePosition - 1)}>❮</button>
-        <button onClick={() => this.goTo(slidePosition + 1)}>❯</button>
-      </div>
-    );
+    if(images.length > 1) {
+      return (
+        <div className={className}>
+          {elemImages}
+          <button onClick={() => this.goTo(slidePosition - 1)}>❮</button>
+          <button onClick={() => this.goTo(slidePosition + 1)}>❯</button>
+        </div>
+      );
+    } else {
+      return <div className={className}>{elemImages}</div>;
+    }
+      
   }
 }
 
 SliderForProduct.propTypes = {
   images: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string,
+    url: PropTypes.string,
+    name: PropTypes.string,
   })),
+  setSlidePosition: PropTypes.number,
+  getSlidePosition: PropTypes.func,
   className: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
