@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-import { getShortListProduct } from '../../actions/';
 
 import ItemShortForAdmin from './short_item_for_admin';
 
-class SearchForAdmin extends React.Component {
+export default class SearchForAdmin extends React.Component{
   constructor(props) {
     super(props);
+
     this.props.getShortListProduct();
   }
 
   render() {
-    const { listProducts, loading } = this.props;
+    const { loading, listProducts } = this.props.searchProductList;
     
     return (
       <div className={`admin_search ${loading ? 'loading' : ''}`}>
@@ -28,17 +26,8 @@ class SearchForAdmin extends React.Component {
 
 SearchForAdmin.propTypes = {
   getShortListProduct: PropTypes.func,
-  listProducts: PropTypes.arrayOf(PropTypes.object),
-  loading: PropTypes.bool,
+  searchProductList: PropTypes.shape({
+    listProducts: PropTypes.arrayOf(PropTypes.object),
+    loading: PropTypes.bool,
+  })
 };
-
-const mapStateToProps = (state) => ({
-  listProducts: state.searchProductList.listProducts,
-  loading: state.searchProductList.loading,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getShortListProduct: () => dispatch(getShortListProduct())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchForAdmin);

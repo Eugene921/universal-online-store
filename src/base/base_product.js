@@ -46,9 +46,8 @@ export const setItemProduct = async (product) => {
 };
 
 export const getItemProduct = async (link) => {
-  return await (await database.ref('/test/' + link).once('value')).val();
+  return (await database.ref('/test/' + link).once('value')).val();
 };
-
 export const getUrlProductImages = async (images) => {
   return Promise.all(images.map(async image => {
     try {

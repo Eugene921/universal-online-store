@@ -6,24 +6,27 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-
 import { AuthProvider } from './src/auth/auth_admin';
 
 import listMiddleware from './src/middleware/';
 import rootReducers from './src/reducers/';
 import App from './src/app';
 
-const store = createStore(
-  rootReducers,
-  composeWithDevTools(
-    applyMiddleware(listMiddleware)
-  )
-);
+function configureStore(preloadedState) {
+  const store = createStore(
+    rootReducers,
+    preloadedState,
+    composeWithDevTools(
+      applyMiddleware(listMiddleware)
+    )
+  );
+  return store;
+}
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={configureStore()}>
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter >
         <App />
       </BrowserRouter>
     </AuthProvider>

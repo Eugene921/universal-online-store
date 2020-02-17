@@ -12,7 +12,7 @@ export default function ItemShortForAdmin({ item }) {
   const { url } = useRouteMatch();
 
   return (
-    <Link to={`${url}/${item.link}`}  style={{ textDecoration: 'none' }} >
+    <Link to={`${url}/${item.link}?`}  style={{ textDecoration: 'none' }} >
       <div className="admin_item_short">
         { item.images ? 
                       <img src={item.images[0].url} alt={item.images[0].name} />

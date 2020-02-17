@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
-import { getItemProducti } from '../../../actions';
+import { withRouter } from 'react-router-dom';
+// import { Field, reduxForm } from 'redux-form';
 
 import CastomInput from './castom_input';
 import CastomTextArea from './castom_textarea';
@@ -13,7 +12,7 @@ import PropTypes from 'prop-types';
 
 // import { getStoreItem } from '../../../initial_state';
 
-import { setItemProduct, getItemProduct, getUrlProductImages } from '../../../base/base_product';
+// import { setItemProduct } from '../../../base/base_product';
 
 class SotoreItemForAdmin extends React.Component {
   static imagesIsMatch(arrImage) {
@@ -29,17 +28,9 @@ class SotoreItemForAdmin extends React.Component {
 
   constructor(props) {
     super(props);
-    const linkPath = props.match.params.product;
-    console.log(this.props.getItemProducti());
+    const { productLink } = props.match.params;
 
     this.state = {
-      name: '',
-      images: [],
-      details: '',
-      sizes: [],
-      colors: [],
-      costPerItem: 0,
-      link: linkPath,
       loading: true,
       slidePosition: 0,
     };
@@ -58,32 +49,31 @@ class SotoreItemForAdmin extends React.Component {
     this.onChangeCost = this.onChangeCost.bind(this);
     this.onChangeDetails = this.onChangeDetails.bind(this);
 
-    this.getItemProduct();
+    this.props.getItemProduct(productLink);
   }
 
-  async getItemProduct() {
-    const { link } = this.state;
+  // async getItemProduct() {
+  //   const { link } = this.state;
     
-    const itemProduct = await getItemProduct(link);
+  //   const itemProduct = await getItemProduct(link);
 
-    if(itemProduct !== null) {
-      const productImages = await getUrlProductImages(itemProduct.images);
+  //   if(itemProduct !== null) {
+  //     const productImages = await getUrlProductImages(itemProduct.images);
 
-      this.setState({
-        name: itemProduct.name || '',
-        details: itemProduct.details || '',
-        images: productImages || [],
-        sizes: itemProduct.sizes || [],
-        colors: itemProduct.colors || [],
-        costPerItem: itemProduct.costPerItem || 0,
-      });
-    }
-    
-    this.setState({ loading: false });
-  }
+  //     this.setState({
+  //       name: itemProduct.name || '',
+  //       details: itemProduct.details || '',
+  //       images: productImages || [],
+  //       sizes: itemProduct.sizes || [],
+  //       colors: itemProduct.colors || [],
+  //       costPerItem: itemProduct.costPerItem || 0,
+  //       loading1: false,
+  //     });
+  //   }
+  // }
 
   setLoading(status) {
-    this.setState({ loading: status });
+    this.setState({ loading1: status });
   }
 
   onChangeDetails(details) {
@@ -172,20 +162,20 @@ class SotoreItemForAdmin extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    const { name, images, details, sizes, colors, costPerItem, link, } = this.state;
+    // const { name, images, details, sizes, colors, costPerItem, link, } = this.state;
 
-    if(SotoreItemForAdmin.imagesIsMatch(images)) return alert('URL and name images must not match');
+    // if(SotoreItemForAdmin.imagesIsMatch(images)) return alert('URL and name images must not match');
 
-    setItemProduct({
-      name: name,
-      images: images,
-      details: details,
-      sizes: sizes,
-      colors: colors,
-      costPerItem: costPerItem,
-      link: link,
-      slidePosition: 0,
-    });
+    // setItemProduct({
+    //   name: name,
+    //   images: images,
+    //   details: details,
+    //   sizes: sizes,
+    //   colors: colors,
+    //   costPerItem: costPerItem,
+    //   link: link,
+    //   slidePosition: 0,
+    // });
   }
 
   onReset(e) {
@@ -217,8 +207,15 @@ class SotoreItemForAdmin extends React.Component {
   // }
 
   render(){
-    const { loading, link, name, details, costPerItem, sizes, colors, images, slidePosition } = this.state;
+    const { slidePosition } = this.state;
+    const { itemProduct, loading } = this.props.itemProduct;
+
+    const { link, name, details, costPerItem, sizes, colors, images } = itemProduct;
+
     const imagesForSlider = images.filter(image => !image.delete);
+
+  console.log(this.props);
+  
     
     return (
       <div className={loading ? 'loading' : ''}>
@@ -258,17 +255,13 @@ class SotoreItemForAdmin extends React.Component {
 
 SotoreItemForAdmin.propTypes = {
   match: PropTypes.any,
-  getItemProducti: PropTypes.func,
+  getItemProduct: PropTypes.func,
+  itemProduct: PropTypes.shape({
+    itemProduct: PropTypes.object,
+    loading: PropTypes.bool,
+  })
 };
 
+// export const adminFormProduct = reduxForm({ form: 'adminFormProduct' })(SotoreItemForAdmin);
 
-const mapStateToProps = (state) => ({
-  loading: state.itemProduct.loading,
-  itemProduct: state.itemProduct.itemProduct,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getItemProducti: () => dispatch(getItemProducti())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SotoreItemForAdmin);
+export default withRouter(SotoreItemForAdmin);
