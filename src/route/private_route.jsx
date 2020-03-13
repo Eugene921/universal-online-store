@@ -1,24 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-import { AuthContext } from '../auth/auth_admin';
 
-const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
-  const { currentUser } = useContext(AuthContext);
-  
+const PrivateRoute = ({ component: RouteComponent, currentUser, ...props}, ...rest) => {
   return (
     <Route
     {...rest}
-    render={routeProps => {
-      return currentUser ? <RouteComponent {...routeProps} /> : <Redirect to="/admin/login" />;
-    }}
+    render={() => currentUser ? <RouteComponent {...props} /> : <Redirect to="/login" />}
     />
   );
 };
 
 PrivateRoute.propTypes = {
-  component: PropTypes.func
+  currentUser: PropTypes.object,
+  component: PropTypes.any,
 };
 
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
 
-export default PrivateRoute;
+export default connect(mapStateToProps, {})(PrivateRoute);

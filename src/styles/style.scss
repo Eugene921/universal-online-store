@@ -1,12 +1,14 @@
-@import './slider.scss',
-        './admin.scss',
-        './store.scss',
-        './loader.scss';
+@import './slider.scss', './admin.scss', './store.scss', './loader.scss', './navigation.scss';
+
+// red #ff2f2f94   // orange #ff930087 // lightgrey #5a5a5a
 
 body {
   background-color: rgb(78, 78, 78);
   color: rgb(202, 202, 202);
   min-height: 100vh;
+}
+p, h1, h2, h3, h4, h5, h6, span {
+  white-space: pre-line;
 }
 
 #root {
@@ -22,23 +24,6 @@ main {
   }
 }
 
-.navigation {
-  background-image: radial-gradient(73% 147%, #EADFDF 59%, #ECE2DF 100%), radial-gradient(91% 146%, rgba(255,255,255,0.50) 47%, rgba(0,0,0,0.50) 100%);
-  background-blend-mode: screen;
-  box-shadow: 0px 0px 10px -5px black;
-  z-index: 100;
-
-  ul {
-    line-height: 50px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    a{
-      color: rgb(34, 34, 34);
-    }
-  }
-}
 
 footer {
   flex: 0 0 auto;
@@ -73,3 +58,22 @@ footer {
   }
 }
 
+@keyframes autofill {
+  to {
+    color: white;
+    background: transparent;
+  }
+}
+@-webkit-keyframes autofill {
+  to {
+    color: white;
+    background: transparent;
+  }
+}
+
+input:-webkit-autofill {
+  animation-name: autofill;
+  animation-fill-mode: both;
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}

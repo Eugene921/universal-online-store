@@ -1,5 +1,6 @@
 .loading {
   position: relative;
+  cursor: wait;
 
   &::after,
   &::before{
@@ -10,8 +11,9 @@
   }
   
   &::after{
-    position: sticky;
+    position: fixed;
     bottom: calc(50vh - 50px);
+    right: calc(50vw - 50px);
     margin: auto;
 
     border: 1px solid #ffffff6e;

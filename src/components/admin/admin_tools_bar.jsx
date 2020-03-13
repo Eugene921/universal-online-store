@@ -1,6 +1,6 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
-import firebaseApp from '../../base/base';
+import firebaseApp from '../../../data_base/base';
 import PropTypes from 'prop-types';
 
 export default function AdminToolBar() {

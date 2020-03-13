@@ -2,7 +2,7 @@ const initialState = {
   store: [
     {
       name: 'jack gusset bot',
-      images: [ { src: 'https://wootten.com.au/content/uploads/2019/05/jack-boot-wc-acorn-raw-front.jpg', name: '1', type: 'image/jpg' },
+      images: [ { url: 'https://wootten.com.au/content/uploads/2019/05/jack-boot-wc-acorn-raw-front.jpg', name: '1', type: 'image/jpg' },
       { src: 'https://wootten.com.au/content/uploads/2019/05/Jack-boot-wc-acorn-raw-rapid-side.jpg', name: '2', type: 'image/jpg' },
       { src: 'https://wootten.com.au/content/uploads/2019/05/jack-boot-wc-acorn-raw-pose.jpg', name: '3', type: 'image/jpg' },
       { src: 'https://wootten.com.au/content/uploads/2019/05/jack-boot-wc-acorn-brown-back.jpg', name: '4', type: 'image/jpg' }],

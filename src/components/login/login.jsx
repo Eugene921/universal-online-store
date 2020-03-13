@@ -1,48 +1,50 @@
-import React, { useCallback } from 'react';
-import firebaseApp from '../../base/base';
-import { withRouter } from 'react-router';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { loginCurrentUser } from '../../actions';
+import { Redirect } from 'react-router-dom';
 
-// import { Route, withRouter } from "react-router-dom";
-
-const LogInAdmin = ({ history }) => {
-  
-  const hendleLogin = useCallback(
-    async e => {
+const LogInAdmin = ({ loginCurrentUser, currentUser }) => {
+  const hendleLogin = async e => {
       e.preventDefault();
       const { email, password } = e.target.elements;
-  
-      try {
-        await firebaseApp
-          .auth()
-          .signInWithEmailAndPassword(email.value, password.value);
-          history.push('/admin');
-  
-      } catch (error) {
-        alert(error);
-      }
-    }, [history]);
+
+      loginCurrentUser({ email: email.value, password: password.value });
+    };
 
   return (
       <div className="login_to_admin">
-        <form onSubmit={hendleLogin}>
-          <label>
-            Email
-            <input name="email" type="email" placeholder="Email"></input>
-          </label>
-          <label>
-            Password
-            <input name="password" type="password" placeholder="Password"></input>
-          </label>
-          <button type="submit">Log in</button>
-        </form>
+        { currentUser ? (
+          <Redirect to="/user" />
+        ) : (
+          <form onSubmit={hendleLogin}>
+            <label>
+              Email
+              <input name="email" type="email" placeholder="Email"></input>
+            </label>
+            <label>
+              Password
+              <input name="password" type="password" placeholder="Password"></input>
+            </label>
+            <button type="submit">Log in</button>
+          </form>
+        ) }
       </div>
   );
 };
 
 LogInAdmin.propTypes = {
-  history: PropTypes.any,
+  loginCurrentUser: PropTypes.func,
+  currentUser: PropTypes.object,
 };
 
 
-export default withRouter(LogInAdmin);
+const mapStateToProps = (store) => ({
+  currentUser: store.user.currentUser,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loginCurrentUser: loginData => dispatch(loginCurrentUser(loginData))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogInAdmin);

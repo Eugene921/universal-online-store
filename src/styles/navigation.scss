@@ -1,0 +1,179 @@
+.navigation {
+  background-image: radial-gradient(73% 147%, #eadfdf 59%, #ece2df 100%),
+    radial-gradient(91% 146%, rgba(255, 255, 255, 0.5) 47%, rgba(0, 0, 0, 0.5) 100%);
+  background-blend-mode: screen;
+  box-shadow: 0px 0px 10px -5px black;
+  z-index: 100;
+
+  ul {
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    a {
+      color: rgb(34, 34, 34);
+    }
+  }
+}
+
+.user {
+  padding: 4px;
+  margin: 0px;
+  position: relative;
+
+  .icon {
+    height: 40px;
+    width: 40px;
+    padding: 0px;
+
+    border-radius: 50%;
+    background-color: transparent;
+    opacity: 0.6;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .user_nav {
+    position: absolute;
+    left: calc(50% - 75px);
+    top: 50px;
+    height: max-content;
+    width: 150px;
+    background-image: radial-gradient(73% 147%, #eadfdf 59%, #ece2df 100%),
+      radial-gradient(91% 146%, rgba(255, 255, 255, 0.5) 47%, rgba(0, 0, 0, 0.5) 100%);
+    background-blend-mode: screen;
+    box-shadow: 0px 3px 6px -3px black;
+    text-align: center;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+
+    ul {
+      height: max-content;
+      display: flex;
+      flex-direction: column;
+
+      li {
+        a {
+          opacity: 0.7;
+          &:hover {
+            opacity: 1;
+          }
+        }
+
+        button {
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          margin-left: 70px;
+          opacity: 0.7;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.cart{
+  margin: 0px;
+  padding: 9px;
+
+  .icon {
+    display: block;
+    height: 30px;
+    width: 30px;
+    padding: 0px;
+
+    border-radius: 50%;
+    background-color: transparent;
+    opacity: 0.6;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+}
+
+
+// ======================STATUS BAR========================
+.status_bar {
+  position: relative;
+  max-height: 15px;
+  transform: translateY(-20px);
+  margin-bottom: -20px;
+  display: flex;
+  justify-content: center;
+  background-color: #f1f1f1;
+  color: black;
+  padding: 2px 0px;
+  font-size: 13px;
+  transition: 0.5s;
+  z-index: 1;
+  box-sizing: 0px 0px 10px -5px black;
+
+  > a {
+    margin-left: 70px;
+    color: rgb(0, 0, 0);
+    opacity: 0.5;
+    border-bottom: 1px solid rgb(0, 0, 0);
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+  > button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    right: 0px;
+    top: -5px;
+    cursor: pointer;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes slide {
+  0% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.status_bar_confirm,
+.status_bar_warn,
+.status_bar_reject {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 0px;
+  animation: slide 0.5s ease-in forwards;
+}
+
+.status_bar_confirm {
+  background-color: #86ff01;
+}
+
+.status_bar_reject {
+  background-color: #ff3d1f;
+}
+
+.status_bar_warn {
+  background-color: #ff930087;
+}
